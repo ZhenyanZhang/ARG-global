@@ -1,0 +1,5 @@
+#ARGs annotation in completed genomes
+rgi main -n 32 -i genome.fna -o card_result
+
+#We extracted 5 kb upstream and downstream of the ARGs detected in all completed genomes for annotating the MGEs
+python mge.py card_result genome.fna output_dir IS Integrase_Transposase 32
