@@ -1,0 +1,21 @@
+#The raw data of metagenomic samples were qualified by FastQC v0.11.5 (https://github.com/s-andrews/FastQC), and then trimmed and quality-filtered using Trimmomatic v0.36.
+fastqc -o out_path sample1_1.fq sample1_2.fq
+trimmomatic SE input.fq.gz output.fq.gz ILLUMINACLIP:TruSeq3-SE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+#ARGs were annotated with the CARD using reads by their recommended tool, RGI56 (v5.1.1), with default parameters for metagenomic reads.
+rgi bwt --read_one sample1_1.fq --aligner bwa --output_file card
+
+#MGEs annotation from the metagenomic reads
+bwa mem ref.fa sample1_1.fq|samtools view -bS /dev/stdin -o out.bam
+
+#abundance calculation of ARGs and MGEs
+samtools view -bF 4 out.bam >out.mapped.bam
+samtools view out.mapped.bam -o out.mapped.sam
+ppm out.mapped.sam ref.fa.fai reads_num >ppm.txt
+python ppm2rpkm.py ppm.txt gene_len.txt >rpkm.txt
+
+#Potential ecological functions of ARG-like reads were annotated with the CNPS database we created by BWA
+bwa mem ref.fa sample1_1_ARG.fq|samtools view -bS /dev/stdin -o out.bam
+
+#The MAGs and ARG contigs were taxonomically assigned using Kraken2 v2.1.2 with the default parameter. ：
+kraken2 --db nr_database --output kraken.annotation --report kraken.annotation.report
