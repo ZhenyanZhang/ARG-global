@@ -1,4 +1,6 @@
 # ARG-global
+This repository contains code used to generate results and figures for the manuscript "Assessment of global health risk of antibiotic resistance genes". Citation: Zhang, Z., Zhang, Q., Wang, T. et al. Assessment of global health risk of antibiotic resistance genes. Nat Commun 13, 1553 (2022). https://doi.org/10.1038/s41467-022-29283-8
+
 Antibiotic resistance genes (ARGs) have accelerated microbial threats to human health during the last decade. Here we quantifitively determined the risk of ARGs from multiple perspectives by using these codes and scripts.
 
 In the main brach, you can found all the codes and scripts for annotation, analysis and visulization in our study. All the data for analysis and visualization will be uploaded as demos respectively, once our study is published. 
